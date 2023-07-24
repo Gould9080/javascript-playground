@@ -1,44 +1,30 @@
-function countdown(n) {
-    if (n < 1) {
-        return [];
-    } else {
-        let count = countdown(n - 1);
-        count.unshift(n);
-        return count;
+
+// REGEX
+
+let hello = "   Hello, World!  ";
+let wsRegex = /^(\s*)(.*)(\s*)$/;
+let result = hello.replace(wsRegex[0], 'b');
+
+function telephoneCheck(str) {
+    let regex = /^1?[-. ]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+    // 0 or 1 '1', 0 or 1 [-. ]...
+    if (str.includes('(') && !str.includes(')')) {
+        return false;
+    }
+    if (str.includes(')') && !str.includes('(')) {
+        return false;
+    }
+
+    if (str.match(regex)) {
+        return true;
+    }
+    else {
+        return false;
     }
 }
 
-function rangeOfNumbers(startNum, endNum) {
-    if (endNum < startNum) {
-        return [];
-    } else {
-        let countDown = rangeOfNumbers(startNum, endNum - 1);
-        countDown.push(endNum);
-        return countDown;
-    }
 
-};
-
-const stats = {
-    max: 56.78,
-    standard_deviation: 4.34,
-    median: 34.54,
-    mode: 23.87,
-    min: -0.75,
-    average: 35.85
-};
-
-const half = ({ max, min }) => (max + min) / 2.0;
-
-const myString = 'Everybody make a toot, everybody make a stroot';
-const myRegex = /make/g;
-myString.match(myRegex);
-
-let hello = "   Hello, World!  ";
-let wsRegex = /^(\s*)(.*)(\s*)$/; // Change this line
-let result = hello.replace(wsRegex[0], 'b'); // Change this line
-
-
+// STRINGS
 
 function myReplace(str, before, after) {
     if (before === before.toLowerCase()) {
@@ -48,49 +34,6 @@ function myReplace(str, before, after) {
         after = after.slice(0, 1).toUpperCase() + after.slice(1);
         return str.replace(before, after);
     }
-}
-
-function pairElement(str) {
-    let newArr = [];
-    for (let x of str) {
-        let tempArr = [];
-        tempArr.push(x);
-        if (x === "A") {
-            tempArr.push("T");
-        } else if (x === "T") {
-            tempArr.push("A");
-        } else if (x === "C") {
-            tempArr.push("G");
-        } else if (x === "G") {
-            tempArr.push("C");
-        }
-        newArr.push(tempArr);
-    }
-    return newArr;
-}
-
-function fearNotLetter(str) {
-    let alphabet = "abcdefghijklmnopqrstuvwxyz";
-    if (alphabet.includes(str)) {
-        return undefined;
-    } else {
-        let firstInd = alphabet.indexOf(str[0]);
-        let section = alphabet.slice(firstInd, firstInd + str.length + 1);
-        let missing = section.split("").find(e => !str.includes(e));
-        return missing;
-    }
-}
-
-function uniteUnique(...arrs) {
-    let newArr = [];
-    for (let arr of arrs) {
-        for (let i = 0; i < arr.length; i++) {
-            if (!newArr.includes(arr[i])) {
-                newArr.push(arr[i]);
-            }
-        }
-    }
-    return newArr;
 }
 
 function convertHTML(str) {
@@ -108,6 +51,41 @@ function convertHTML(str) {
     }
 
     return str;
+}
+
+function fearNotLetter(str) {
+    let alphabet = "abcdefghijklmnopqrstuvwxyz";
+    if (alphabet.includes(str)) {
+        return undefined;
+    } else {
+        let firstInd = alphabet.indexOf(str[0]);
+        let section = alphabet.slice(firstInd, firstInd + str.length + 1);
+        let missing = section.split("").find(e => !str.includes(e));
+        return missing;
+    }
+}
+
+function palindrome(str) {
+    str = str.replace(/[^0-9a-z]/gi, '').toLowerCase();
+    let reverse = str.slice();
+    reverse = reverse.split('').reverse().join('');
+    if (str === reverse) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+// NUMBERS
+
+function fibsRecursion(n) {
+    if (n < 2) {
+        return n;
+    }
+    else {
+        return fibsRecursion(n - 1) + fibsRecursion(n - 2);
+    }
 }
 
 function sumFibs(num) {
@@ -144,6 +122,65 @@ function sumPrimes(num) {
         }
     }
     return primes.reduce((partialSum, a) => partialSum + a, 0);
+}
+
+function decToBinary(num) {
+    let binary = "";
+    while (num > 0) {
+        if (num % 2 == 0) {
+            binary = 0 + binary;
+            num = num / 2;
+        } else {
+            binary = 1 + binary;
+            num = Math.floor(num / 2);
+        }
+    }
+    return binary;
+}
+
+function binaryToDec(bin) {
+    let binArr = bin.toString().split('');
+    let total = 0;
+    let power = (binArr.length - 1);
+    for (let i = 0; i < binArr.length; i++) {
+        total += (binArr[i] * 2 ** power);
+        power--;
+    }
+    return total;
+}
+
+function convertToRoman(num) {
+
+    const arabicToRoman = {
+        1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII", 8: "VIII", 9: "IX",
+        10: "X", 20: "XX", 30: "XXX", 40: "XL", 50: "L", 60: "LX", 70: "LXX", 80: "LXXX", 90: "XC",
+        100: "C", 200: "CC", 300: "CCC", 400: "CD", 500: "D", 600: "DC", 700: "DCC", 800: "DCCC", 900: "CM",
+        1000: "M", 2000: "MM", 3000: "MMM"
+    };
+
+    let numArr = String(+num).split("");
+    let result = '';
+    for (let i = 0; i < numArr.length; i++) {
+        let thisKey = numArr[i] * Math.pow(10, numArr.length - i - 1);
+        if (arabicToRoman[thisKey]) {
+            result += arabicToRoman[thisKey];
+        }
+    }
+    return result;
+}
+
+// ARRAYS
+
+function uniteUnique(...arrs) {
+    let newArr = [];
+    for (let arr of arrs) {
+        for (let i = 0; i < arr.length; i++) {
+            if (!newArr.includes(arr[i])) {
+                newArr.push(arr[i]);
+            }
+        }
+    }
+    return newArr;
 }
 
 function smallestCommons(arr) {
@@ -195,32 +232,10 @@ function steamrollArray(arr) {
     return steamrolled;
 }
 
-function decToBinary(num) {
-    let binary = "";
-    while (num > 0) {
-        if (num % 2 == 0) {
-            binary = 0 + binary;
-            num = num / 2;
-        } else {
-            binary = 1 + binary;
-            num = Math.floor(num / 2);
-        }
-    }
-    return binary;
-}
 
-function binaryToDec(bin) {
-    let binArr = bin.toString().split('');
-    let total = 0;
-    let power = (binArr.length - 1);
-    for (let i = 0; i < binArr.length; i++) {
-        total += (binArr[i] * 2 ** power);
-        power--;
-    }
-    return total;
-}
+// MISC
 
-function binaryAgent(str) {
+function binaryAgent(str) { // string from binary
     let strArr = str.split(' ');
     let message = [];
     let result = '';
@@ -248,29 +263,6 @@ function truthCheck(collection, pre) {
         }
     }
     return result;
-}
-
-function addTogether() {
-    let first = arguments[0];
-    if (typeof first !== 'number') {
-        return undefined;
-    }
-    let addMe = function (num) {
-        if (typeof num !== 'number') {
-            return undefined;
-        }
-        return first + num;
-    };
-    if (arguments.length == 2) {
-        let second = arguments[1];
-        if (typeof second !== 'number') {
-            return undefined;
-        } else {
-            return first + second;
-        }
-    } else {
-        return addMe;
-    }
 }
 
 const Person = function (firstAndLast) {
@@ -308,37 +300,6 @@ function orbitalPeriod(arr) {
     return newArr;
 }
 
-function palindrome(str) {
-    str = str.replace(/[^0-9a-z]/gi, '').toLowerCase();
-    let reverse = str.slice();
-    reverse = reverse.split('').reverse().join('');
-    if (str === reverse) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-function convertToRoman(num) {
-
-    const arabicToRoman = {
-        1: "I", 2: "II", 3: "III", 4: "IV", 5: "V", 6: "VI", 7: "VII", 8: "VIII", 9: "IX",
-        10: "X", 20: "XX", 30: "XXX", 40: "XL", 50: "L", 60: "LX", 70: "LXX", 80: "LXXX", 90: "XC",
-        100: "C", 200: "CC", 300: "CCC", 400: "CD", 500: "D", 600: "DC", 700: "DCC", 800: "DCCC", 900: "CM",
-        1000: "M", 2000: "MM", 3000: "MMM"
-    };
-
-    let numArr = String(+num).split("");
-    let result = '';
-    for (let i = 0; i < numArr.length; i++) {
-        let thisKey = numArr[i] * Math.pow(10, numArr.length - i - 1);
-        if (arabicToRoman[thisKey]) {
-            result += arabicToRoman[thisKey];
-        }
-    }
-    return result;
-}
-
 function rot13(str) {
     const letters = {
         1: 'a', 2: 'b', 3: 'c', 4: 'd', 5: 'e', 6: 'f', 7: 'g', 8: 'h', 9: 'i',
@@ -362,24 +323,6 @@ function rot13(str) {
         }
     }
     return result;
-}
-
-function telephoneCheck(str) {
-    let regex = /^1?[-. ]?\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-    // 0 or 1 '1', 0 or 1 [-. ]...
-    if (str.includes('(') && !str.includes(')')) {
-        return false;
-    }
-    if (str.includes(')') && !str.includes('(')) {
-        return false;
-    }
-
-    if (str.match(regex)) {
-        return true;
-    }
-    else {
-        return false;
-    }
 }
 
 function checkCashRegister(price, cash, cid) {
@@ -443,11 +386,3 @@ function checkCashRegister(price, cash, cid) {
     return result;
 }
 
-function fibsRecursion(n) {
-    if (n < 2) {
-        return n;
-    }
-    else {
-        return fibsRecursion(n - 1) + fibsRecursion(n - 2);
-    }
-}
