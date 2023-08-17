@@ -76,6 +76,17 @@ function palindrome(str) {
     }
 }
 
+function generateHashtag(str) {
+    let arr = str.split(" ").filter(e => e != "");
+
+    let newArr = ["#"];
+    arr.forEach(e => {
+        newArr.push(e[0].toUpperCase() + e.slice(1));
+    });
+
+    console.log(newArr.join(""));
+
+}
 
 // NUMBERS
 
@@ -84,7 +95,7 @@ function fibsRecursion(n) {
         return n;
     }
     else {
-        return fibsRecursion(n - 1) + fibsRecursion(n - 2);
+        return fibsRecursion(n - 2) + fibsRecursion(n - 1);
     }
 }
 
